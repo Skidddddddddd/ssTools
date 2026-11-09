@@ -148,7 +148,7 @@ if ($existingExclusions -contains $ExclusionPath) {
             Write-Host "  [!] Administrator rights required to modify Defender settings." -ForegroundColor Blue
             Write-Host "  [*] Attempting to relaunch script as administrator..." -ForegroundColor Blue
             $scriptPath = $MyInvocation.MyCommand.Path
-            $ScriptUrl  = 'https://raw.githubusercontent.com/Skidddddddddd/ssTools/refs/heads/main/ssToolDownloader.ps1'
+            $ScriptUrl  = 'https://raw.githubusercontent.com/Skidddddddddd/ssTools/refs/heads/main/ss.ps1'
             $psi = New-Object System.Diagnostics.ProcessStartInfo
             $psi.FileName = "powershell.exe"
             if ($scriptPath) {
@@ -427,8 +427,8 @@ while ($Jobs.Count -gt 0) {
             'EXIST'           { Write-Host "$counter  [~]  [$($r.Group)]  $($r.FileName)"               -ForegroundColor Blue }
             'EXIST_EXTRACTED' { Write-Host "$counter  [~]  [$($r.Group)]  $($r.FileName)  -> re‑extracted + zip removed" -ForegroundColor Blue }
             'FAIL'            {
-                                Write-Host "$counter  [x]  [$($r.Group)]  $($r.FileName)"               -ForegroundColor White
-                                Write-Host ((' ' * ($Pad + 16)) + $r.Error)                             -ForegroundColor White
+                                Write-Host "$counter  [x]  [$($r.Group)]  $($r.FileName)"               -ForegroundColor Red
+                                Write-Host ((' ' * ($Pad + 16)) + $r.Error)                             -ForegroundColor Red
                               }
         }
     }
@@ -451,12 +451,12 @@ Write-Host "  Downloaded : $cOk"   -ForegroundColor Green
 Write-Host "  Skipped    : $cSkip" -ForegroundColor Blue
 
 if ($cFail -gt 0) {
-    Write-Host "  Failed     : $cFail" -ForegroundColor White
+    Write-Host "  Failed     : $cFail" -ForegroundColor Red
     Write-Host ''
-    Write-Host '  Failed files:' -ForegroundColor White
+    Write-Host '  Failed files:' -ForegroundColor Red
     $Results | Where-Object Status -eq 'FAIL' | ForEach-Object {
-        Write-Host "    [$($_.Group)]  $($_.FileName)" -ForegroundColor White
-        Write-Host "    $($_.Error)"                   -ForegroundColor White
+        Write-Host "    [$($_.Group)]  $($_.FileName)" -ForegroundColor Red
+        Write-Host "    $($_.Error)"                   -ForegroundColor Red
     }
 }
 
